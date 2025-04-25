@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+</head>
+<body>
+<div class="container" style="margin-top: 30px">
+    <div>文章管理</div>
+    <div>
+        <a th:href="@{/article/save}" th:text="新增"></a>
+    </div>
+    <table class="table table-bordered table-hover table table-striped">
+        <tr>
+            <td>
+                序号
+            </td>
+            <td>
+                标题
+            </td>
+            <td>
+                内容
+            </td>
+            <td>
+                创建时间
+            </td>
+            <td>
+                更新时间
+            </td>
+        </tr>
+        <!-- <c:forEach id="" items="${}" varstatus></c:forEach>-->
+        <!-- <tr th:each="临时变量名,循环状态变量:${集合数据}">-->
+        <tr th:each="article,status:${page.records}">
+            <td th:text="${status.count}"></td>
+            <td th:text="${article.title}"></td>
+            <td th:text="${article.content}"></td>
+            <td th:text="${#temporals.format(article.createTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td th:text="${#temporals.format(article.updateTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td>
+                <a href="javascript:;" th:text="删除" th:onclick="doDel([[${article.aid}]])"></a>
+                <a th:text="修改" th:href="@{|/article/update/${article.aid}|}"></a>
+            </td>
+        </tr>
+    </table>
+    <div th:insert="page :: page"></div>
+</div>
+</body>
+<div>
+    <script>
+        function doDel(aid){
+            if(confirm("确认删除吗?"))
+                location.href="/article/delete/"+aid
+        }
+    </script>
+</div>
+</html>

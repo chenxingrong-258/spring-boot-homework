@@ -1,0 +1,15 @@
+com:
+  xzit:
+    model:
+      teacher:
+        name: 张三
+        gender: 男
+        age: 34
+        students:
+          - name: 李四
+            gender: 男
+          - name: 王五
+            gender: 女
+spring:
+  profiles:
+    active: dev

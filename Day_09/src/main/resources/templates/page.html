@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<!--suppress ALL-->
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="page"><!--定义用于被显示列表页包含-->
+    <style>
+        .page{
+            border:1px solid blue;
+            margin-right: 5px;
+            padding:3px 5px;
+        }
+        .page.active{
+            color:red;
+            border:1px solid red;
+        }
+    </style>
+    <div th:if="${page.pages>0}">
+        <div style="float: left">
+            当前第<span th:text="${page.current}"></span>页,
+            共<span th:text="${page.pages}"></span>页,
+            总记录数<span th:text="${page.total}"></span>
+        </div>
+        <div style="float:right;">
+            <a th:text="首页" th:if="${page.current>1}" th:href="@{${path}}"></a>
+            <a th:text="上一页" th:if="${page.current>1}" th:href="@{${path}+${page.current-1}}"></a>
+            <a th:href="@{${path}+${i}}" th:each="i:${#numbers.sequence(1,page.pages)}" th:text="${i}"
+            th:class="${page.current==i}?'page active':'page'"></a>
+            <a th:text="下一页" th:if="${page.current<page.pages}" th:href="@{${path}+${page.current+1}}"></a>
+            <a th:text="尾页"  th:if="${page.current<page.pages}" th:href="@{${path}+${page.pages}}"></a>
+        </div>
+    </div>
+</div>
+</html>
